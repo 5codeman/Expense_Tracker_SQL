@@ -6,16 +6,9 @@ const app = express();
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.urlencoded({ extended: false }));
 
-// // use express router
-// app.use('/', require('./routes/index'));
-
-// //for static file
-// app.use(express.static('assets'));
-
-// // Set up the view engine
-// app.set('view engine', 'ejs');
-// app.set('views', './views');
-
+// use express router
+app.use('/', require('./router/user'));
+app.use('/user', require('./router/user'));
 
 app.listen(port, function (err) {
     if (err) {
