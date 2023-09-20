@@ -6,6 +6,9 @@ const app = express();
 // const bodyParser = require('body-parser');
 // app.use(bodyParser.urlencoded({ extended: false }));
 
+// set the static folder in my express (by the we can use css and js file)
+app.use(express.static('./public'));
+
 // use express router
 app.use('/', require('./router/user'));
 app.use('/user', require('./router/user'));
