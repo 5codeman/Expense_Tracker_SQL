@@ -2,9 +2,9 @@ const express = require('express');
 const port = 9000;
 const app = express();
 
-// //parse the form data sent with post request
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({ extended: false }));
+//parse the form data sent with post request
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // connect to the mysql DB
 const sequelize = require('./util/database');
