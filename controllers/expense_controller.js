@@ -41,3 +41,29 @@ module.exports.addExpense = async (req, res) => {
         };
     }
 };
+
+exports.getAllExpenses = async (req, res) => {
+    try {
+        const expenses = await Expense.findAll(); //{ where: { userId: req.user.id } }
+        res.json(expenses); // send the date where api call (This is is API or controller for get expense data)
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+exports.deleteExpense = async (req, res) => {
+    const id = req.params.id;
+    try {
+        //   const expense = await Expense.findByPk(id);
+        //   await User.update(
+        //     {
+        //       totalExpenses: req.user.totalExpenses - expense.amount,
+        //     },
+        //     { where: { id: req.user.id } }
+        //   );
+        await Expense.destroy({ where: { id: id } }); //,userId: req.user.id 
+        res.redirect("/user_dashboard");
+    } catch (err) {
+        console.log(err);
+    }
+};
