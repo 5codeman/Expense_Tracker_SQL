@@ -19,18 +19,18 @@
                 <input type="text" placeholder="Name" name="name" id="name" required />
                 <input type="email" placeholder="Email" name="email" id="email" required />
                 <input type="password" id="password" placeholder="Password" name="password" required />
-                <button id="signUpBtn">Sign Up</button>
+                <button type="submit" id="signUpBtn">Sign Up</button>
             </form>
         </div>
 
         <div class="form-container sign-in-container">
-            <form onsubmit="return false;">
+            <form action="/user/signIn" method="post">
                 <h1>Login</h1>
                 <span>use your previous credentials</span>
-                <input type="email" placeholder="Email" name="loginEmail" id="loginEmail" required />
-                <input type="password" placeholder="Password" name="loginPassword" id="loginPassword" required />
-                <a href="/password/forgotPasswordPage">Forgot Password?</a>
-                <button id="loginBtn">Login</button>
+                <input type="email" placeholder="Email" name="email" id="loginEmail" required />
+                <input type="password" placeholder="Password" name="password" id="loginPassword" required />
+                <!-- <a href="/password/forgotPasswordPage">Forgot Password?</a> -->
+                <button type="submit" id="loginBtn">Login</button>
             </form>
         </div>
 

@@ -9,4 +9,8 @@ router.get('/', homeController.homePage);
 
 router.post('/signUp', userController.signUp);
 
+router.post('/signIn', userController.signIn);
+
+router.get('/user_dashboard', userController.userDashboard);
+
 module.exports = router;

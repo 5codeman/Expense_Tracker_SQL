@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Expense Tracker</title>
+
+
+    <!-- ----------------------------------------------------------------------------- -->
+    <!-- css -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/css/user_dashboard.css" />
+</head>
+
+<body>
+
+
+    <!--------------------------------------------------------------------------------- -->
+    <!-- Nav Bar -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark" id="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/user_dashboard">Expense Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/user_dashboard">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="reportsLink" class="nav-link active" aria-current="page" href="#"
+                            onclick="onClickAlert();">Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="leaderboardLink" class="nav-link active" aria-current="page" href="#"
+                            onclick="onClickAlert();">LeaderBoard</a>
+                    </li>
+                </ul>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button id="buyPremiumBtn" class="topBtn btn py-1" type="button" data-bs-toggle="tooltip"
+                        data-bs-placement="left"
+                        title="Premium Membership inclues LeaderBoard & Daily & Monthly Reports">
+                        Buy Premium &#128081
+                    </button>
+                    <button id="logoutBtn" class="topBtn btn py-1" type="button">Log out</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <!-- --------------------------------------------------------------------------------- -->
+    <!-- Add Expense Form-->
+
+
+    <form id="form1" class="d-flex p-2" onsubmit="return false;">
+        <div class="input-group mb-3 d-flex m-4" id="category">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" name="category"
+                data-bs-toggle="dropdown" aria-expanded="false" id="categoryBtn">
+                Select Category
+            </button>
+            <ul class="dropdown-menu" id="categoryMenu" aria-labelledby="categoryBtn">
+                <li class="dropdown-item" data-value="Mobile & Computers">
+                    Mobile & Computers
+                </li>
+                <li class="dropdown-item" data-value="Fashion & Beauty">
+                    Fashion & Beauty
+                </li>
+                <li class="dropdown-item" data-value="Groceries & Pet Supplies">
+                    Groceries & Pet Supplies
+                </li>
+                <li class="dropdown-item" data-value="Home, Furniture & Appliances">
+                    Home, Furniture & Appliances
+                </li>
+                <li class="dropdown-item" data-value="Music, Video & Gaming">
+                    Music, Video & Gaming
+                </li>
+                <li class="dropdown-item" data-value="Books & Education">
+                    Books & Education
+                </li>
+                <li class="dropdown-item" data-value="Toys, Children & Baby">
+                    Toys, Children & Baby
+                </li>
+                <li class="dropdown-item" data-value="Payments & Bookings">
+                    Payments & Bookings
+                </li>
+                <li class="dropdown-item" data-value="Automotive">Automotive</li>
+                <li class="dropdown-item" data-value="Office & Professional">
+                    Office & Professional
+                </li>
+                <li class="dropdown-item" data-value="Sports, Outdoor & Travel">
+                    Sports, Outdoor & Travel
+                </li>
+                <li class="dropdown-item" data-value="Gifting">Gifting</li>
+                <li class="dropdown-item" data-value="Bills & EMI's">
+                    Bills & EMI's
+                </li>
+                <li class="dropdown-item" data-value="Others">Others</li>
+            </ul>
+            <input type="hidden" name="category" value="default_value" id="categoryInput" />
+        </div>
+
+        <!--******************************************************************* -->
+        <!-- Decsiption -->
+        <div class="input-group mb-3 d-flex m-4" id="description">
+            <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+            <input type="text" id="descriptionValue" name="description" class="form-control"
+                aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+        </div>
+
+        <!--  ****************************************************************** -->
+        <!-- Amount -->
+
+        <div class="input-group mb-3 d-flex m-4" id="amount">
+            <span class="input-group-text">Amount</span>
+            <span class="input-group-text"> &#8377;</span>
+            <input type="text" name="amount" class="form-control"
+                aria-label="Dollar amount (with dot and two decimal places)" id="amountValue" />
+        </div>
+
+        <!--     ********************************************************************************* -->
+        <!-- Add Expense Btn-->
+        <div class="mb-3 d-flex m-4" id="submit">
+            <button type="submit" class="btn btn-success" id="submitBtn">
+                Add Expense
+            </button>
+        </div>
+    </form>
+
+    <!-- --------------------------------------------------------------------------------- -->
+    <!-- Table -->
+
+    <div class="container mt-4 p-3 " id="table">
+        <table id="example" class="table table-hover" style="width:100%">
+
+            <!-- ------------------------------------------------------------------------- -->
+            <!-- table head -->
+            <thead id="tableHead">
+                <tr>
+                    <th scope="col" class="rounded-start">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col" class="rounded-end"></th>
+                </tr>
+            </thead>
+
+            <!-- ------------------------------------------------------------------------- -->
+            <!-- table body -->
+
+            <tbody id="tbodyId">
+
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul id="paginationUL" class="pagination justify-content-md-end">
+
+            </ul>
+        </nav>
+    </div>
+
+
+
+    <!-- ---------------------------------------------------------------------------------- -->
+    <!-- scripts -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"
+        integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="/js/user_dashboard.js"></script>
+    <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
+    <script>
+        function onClickAlert() {
+            alert("Buy Premium to access this feature.");
+        }
+    </script>
+
+</body>
+
+</html>

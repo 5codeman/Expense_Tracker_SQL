@@ -1,4 +1,6 @@
+const sequelize = require('sequelize');
 const User = require('../models/user');
+const path = require('path');
 
 module.exports.signUp = async (req, res) => {
     try {
@@ -25,3 +27,34 @@ module.exports.signUp = async (req, res) => {
         console.log(error);
     }
 };
+
+module.exports.signIn = async function (req, res) {
+    try {
+        const email = req.body.email;
+        const password = req.body.password;
+
+        await User.findOne({ where: { email: email } }).then((user) => {
+            if (!user) {
+                res.status(404).send(`<script> window.location.href='/'; alert('User not found!'); </script>`);
+            }
+
+            else if (user && user.password != password) {
+                res.status(401).send(`<script> window.location.href='/'; alert('Password Incorrect!'); </script>`);
+            }
+
+            else if (user && user.password == password) {
+                res.status(200).send(`<script> window.location.href='/user_dashboard'; </script>`);
+
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports.userDashboard = function (req, res) {
+    res.sendFile(path.join(__dirname, '../public/views/user_dashboard.html'));
+}
