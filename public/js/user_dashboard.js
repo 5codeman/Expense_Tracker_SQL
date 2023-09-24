@@ -245,52 +245,57 @@ async function deleteExpense(e) {
     }
 }
 
-// async function editExpense(e) {
-//     try {
-//         const token = localStorage.getItem("token");
-//         const categoryValue = document.getElementById("categoryBtn");
-//         const descriptionValue = document.getElementById("descriptionValue");
-//         const amountValue = document.getElementById("amountValue");
-//         const addExpenseBtn = document.getElementById("submitBtn");
-//         if (e.target.classList.contains("edit")) {
-//             let tr = e.target.parentElement.parentElement;
-//             let id = tr.children[0].textContent;
-//             //Fill the input values with the existing values
-//             const res = await axios.get(
-//                 "http://localhost:3000/expense/getAllExpenses",
-//                 { headers: { Authorization: token } }
-//             );
-//             res.data.forEach((expense) => {
-//                 if (expense.id == id) {
-//                     categoryValue.textContent = expense.category;
-//                     descriptionValue.value = expense.description;
-//                     amountValue.value = expense.amount;
-//                     addExpenseBtn.textContent = "Update";
+table.addEventListener("click", (e) => {
+    editExpense(e);
+});
 
-//                     // const form = document.getElementById("form1");
-//                     addExpenseBtn.removeEventListener("click", addExpense);
+async function editExpense(e) {
+    try {
+        // const token = localStorage.getItem("token");
+        const categoryValue = document.getElementById("categoryBtn");
+        const descriptionValue = document.getElementById("descriptionValue");
+        const amountValue = document.getElementById("amountValue");
+        const addExpenseBtn = document.getElementById("submitBtn");
 
-//                     addExpenseBtn.addEventListener("click", async function update(e) {
-//                         e.preventDefault();
-//                         console.log("request to backend for edit");
-//                         const res = await axios.post(
-//                             `http://localhost:3000/expense/editExpense/${id}`,
-//                             {
-//                                 category: categoryValue.textContent.trim(),
-//                                 description: descriptionValue.value,
-//                                 amount: amountValue.value,
-//                             },
-//                             { headers: { Authorization: token } }
-//                         );
-//                         window.location.reload();
-//                     });
-//                 }
-//             });
-//         }
-//     } catch {
-//         (err) => console.log(err);
-//     }
-// }
+        if (e.target.classList.contains("edit")) {
+            let tr = e.target.parentElement.parentElement;
+            let id = tr.children[0].textContent;
+            //Fill the input values with the existing values
+            const res = await axios.get(
+                "http://localhost:9000/expense/getAllExpenses" // here not need of api call we can acess all the data from tr.children[1] tr.children[2].... so on
+                // ,{ headers: { Authorization: token } }
+            );
+            res.data.forEach((expense) => {
+                if (expense.id == id) {
+                    categoryValue.textContent = expense.category;
+                    descriptionValue.value = expense.description;
+                    amountValue.value = expense.amount;
+                    addExpenseBtn.textContent = "Update";
+
+                    // const form = document.getElementById("form1");
+                    addExpenseBtn.removeEventListener("click", addExpense);
+
+                    addExpenseBtn.addEventListener("click", async function update(e) {
+                        e.preventDefault();
+                        // console.log("request to backend for edit");
+                        const res = await axios.post(
+                            `http://localhost:9000/expense/updateExpense/${id}`,
+                            {
+                                category: categoryValue.textContent.trim(),
+                                description: descriptionValue.value,
+                                amount: amountValue.value,
+                            }
+                            //, { headers: { Authorization: token } }
+                        );
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    } catch {
+        (err) => console.log(err);
+    }
+}
 
 // async function buyPremium(e) {
 //     const token = localStorage.getItem("token");
@@ -354,8 +359,4 @@ async function deleteExpense(e) {
 
 // document.addEventListener("DOMContentLoaded", isPremiumUser);
 
-
-// table.addEventListener("click", (e) => {
-//     editExpense(e);
-// });
 // logoutBtn.addEventListener("click", logout);

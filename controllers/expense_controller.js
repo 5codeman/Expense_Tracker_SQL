@@ -67,3 +67,31 @@ exports.deleteExpense = async (req, res) => {
         console.log(err);
     }
 };
+
+exports.updateExpense = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const category = req.body.category;
+        const description = req.body.description;
+        const amount = req.body.amount;
+
+        //   const expense = await Expense.findByPk(id);
+
+        //   await User.update(
+        //     {
+        //       totalExpenses: req.user.totalExpenses - expense.amount + Number(amount),
+        //     },
+        //     { where: { id: req.user.id } }
+        //   );
+
+        await Expense.update({
+            category: category,
+            description: description,
+            amount: amount
+        }, { where: { id: id } } //, userId: req.user.id
+        );
+        res.redirect("/user_dashboard");
+    } catch (err) {
+        console.log(err);
+    }
+};
