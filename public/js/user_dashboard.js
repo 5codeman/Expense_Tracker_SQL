@@ -346,17 +346,18 @@ async function editExpense(e) {
 //     }
 // }
 
-// async function logout() {
-//     try {
-//         localStorage.clear();
-//         window.location.href = "/";
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+logoutBtn.addEventListener("click", logout);
+
+async function logout() {
+    try {
+        // localStorage.clear();
+        window.location.href = "/";
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 // buyPremiumBtn.addEventListener("click", buyPremium);
 
 // document.addEventListener("DOMContentLoaded", isPremiumUser);
 
-// logoutBtn.addEventListener("click", logout);

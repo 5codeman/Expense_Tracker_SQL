@@ -1,6 +1,7 @@
 const sequelize = require('sequelize');
 const User = require('../models/user');
 const path = require('path');
+const jwt = require("jsonwebtoken");
 
 module.exports.signUp = async (req, res) => {
     try {
@@ -28,6 +29,11 @@ module.exports.signUp = async (req, res) => {
     }
 };
 
+// for genereating JWT token
+function generateAccessToken(id, email) {
+    return jwt.sign({ userId: id, email: email }, process.env.SECRET_KEY);
+};
+
 module.exports.signIn = async function (req, res) {
     try {
         const email = req.body.email;
@@ -53,8 +59,8 @@ module.exports.signIn = async function (req, res) {
     catch (err) {
         console.log(err);
     }
-}
+};
 
 module.exports.userDashboard = function (req, res) {
     res.sendFile(path.join(__dirname, '../public/views/user_dashboard.html'));
-}
+};
