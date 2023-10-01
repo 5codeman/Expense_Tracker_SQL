@@ -350,7 +350,8 @@ logoutBtn.addEventListener("click", logout);
 
 async function logout() {
     try {
-        // localStorage.clear();
+        //delete the browser cookies
+        document.cookie = "jwt_token=; max-age=-60"; // ? Any diff. way and why we write like this ??
         window.location.href = "/";
     } catch (err) {
         console.log(err);

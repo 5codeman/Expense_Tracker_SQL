@@ -8,7 +8,11 @@ const app = express();
 //parse the form data sent with post request
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(bodyParser.json()); // It parses only json object(when any request post json data)
+
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 // connect to the mysql DB
 const sequelize = require('./util/database');

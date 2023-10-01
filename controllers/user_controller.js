@@ -49,6 +49,8 @@ module.exports.signIn = async function (req, res) {
             }
 
             else if (user && user.password == password) {
+                const token = generateAccessToken(user.id, user.email);
+                res.cookie("jwt_token", token);
                 res.status(200).send(`<script> window.location.href='/user_dashboard'; </script>`);
 
             }
@@ -64,3 +66,5 @@ module.exports.signIn = async function (req, res) {
 module.exports.userDashboard = function (req, res) {
     res.sendFile(path.join(__dirname, '../public/views/user_dashboard.html'));
 };
+
+
