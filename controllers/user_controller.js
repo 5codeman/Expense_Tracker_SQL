@@ -169,6 +169,7 @@ module.exports.getLeaderboardUser = async (req, res) => {
     } catch (err) {
         console.log(err);
     }
+    //pending task - we have to send the sorted data from here backend only
 };
 
 //send sorted data from backend - pending wqtch sir video
@@ -206,7 +207,7 @@ module.exports.dailyReports = async (req, res) => {
     try {
         const date = req.body.date;
         const expenses = await Expense.findAll({
-            where: { date: date, userId: req.user.id },
+            where: { date: date, userId: req.user.id }
         });
         return res.send(expenses);
     } catch (error) {
@@ -218,15 +219,8 @@ module.exports.monthlyReports = async (req, res) => {
     try {
         const month = req.body.month;
         const expenses = await Expense.findAll({
-            where: {
-                date: {
-                    [sequelize.like]: `%-${month}-%`,
-                },
-                userId: req.user.id,
-            },
-            raw: true,
+            where: { date: { [sequelize.Op.like]: `%-${month}-%`, }, userId: req.user.id, } //, raw: true,
         });
-
         return res.send(expenses);
     } catch (error) {
         console.log(error);

@@ -17,20 +17,13 @@ async function getDailyReport(e) {
         e.preventDefault();
         const date = new Date(dateInput.value);
         const formattedDate = `${date.getDate().toString().padStart(2, "0")}-${(
-            date.getMonth() + 1
-        )
-            .toString()
-            .padStart(2, "0")}-${date.getFullYear()}`;
+            date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear()}`;
 
         let totalAmount = 0;
-        const res = await axios.post(
-            "http://localhost:9000/user/dailyReports",
-            {
-                date: formattedDate,
-            }
-            // ,{ headers: { Authorization: token } }
+        const res = await axios.post("http://localhost:9000/user/dailyReports", { date: formattedDate }
         );
 
+        // for empty the previous data
         tbodyDaily.innerHTML = "";
         tfootDaily.innerHTML = "";
 
@@ -64,8 +57,8 @@ async function getDailyReport(e) {
         tr.setAttribute("class", "trStyle");
         tfootDaily.appendChild(tr);
 
-        const td1 = document.createElement("td");
-        const td2 = document.createElement("td");
+        const td1 = document.createElement("td"); // no use but make for balancing colums
+        const td2 = document.createElement("td"); // no use but make for balancing colums
         const td3 = document.createElement("td");
         const td4 = document.createElement("td");
 
@@ -88,18 +81,11 @@ monthShowBtn.addEventListener("click", getMonthlyReport);
 async function getMonthlyReport(e) {
     try {
         e.preventDefault();
-        // const token = localStorage.getItem("token");
         const month = new Date(monthInput.value);
-        const formattedMonth = `${(month.getMonth() + 1)
-            .toString()
-            .padStart(2, "0")}`;
+        const formattedMonth = `${(month.getMonth() + 1).toString().padStart(2, "0")}`;
 
         let totalAmount = 0;
-        const res = await axios.post(
-            "http://localhost:9000/user/monthlyReports",
-            {
-                month: formattedMonth,
-            }
+        const res = await axios.post("http://localhost:9000/user/monthlyReports", { month: formattedMonth }
             // ,{ headers: { Authorization: token } }
         );
 
