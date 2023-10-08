@@ -1,0 +1,82 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #effeff;
+}
+/* 293241 dark
+  3d5a80 blue
+  98c1d9 light
+*/
+.editDelete {
+  float: right;
+  margin: 3px;
+  padding: 3px 10px;
+}
+#png {
+  margin-right: 10px;
+}
+#form1 {
+  border-radius: 10px;
+  background-color: #3d5a80;
+  box-shadow: 4px 4px 9px #293241;
+  margin: 20px 193px;
+}
+#table {
+  border-radius: 10px;
+  background-color: #d2eaf7;
+  /* background-image: linear-gradient(to bottom right, #c7e9fd, #3d5a80); */
+  box-shadow: 4px 4px 9px #b8b8b8;
+}
+#submitBtn {
+  width: 140px;
+  background-color: #293241;
+  border-color: #293241;
+  color: white;
+}
+.topBtn {
+  background-color: white;
+  border-color: white;
+  color: #293241;
+}
+#navigation {
+  background-color: #233b64;
+}
+#categoryBtn {
+  background-color: #293241;
+  width: auto;
+  border-radius: 7px;
+  border: none;
+  color: white;
+}
+#category {
+  width: 300px;
+}
+.input-group-text {
+  background-color: #293241;
+  color: white;
+  border: none;
+}
+#description {
+  width: 2000px;
+}
+
+.trStyle {
+  background-color: transparent;
+}
+#categoryBtn:hover,
+#submitBtn:hover,
+.editDelete:hover {
+  background-color: #ffffff;
+  color: #293241;
+  border-color: #293241;
+}
+.topBtn:hover {
+  background-color: #3d5a80;
+  color: white;
+  border-color: #3d5a80;
+}
+.editDelete {
+  background-color: #293241;
+  border: none;
+}

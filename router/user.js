@@ -17,4 +17,22 @@ router.post('/signIn', secure, userController.signIn);
 
 router.get('/user_dashboard', userAuthentication, userController.userDashboard);
 
+router.get('/premiumMembership', userAuthentication, userController.buyPremium);
+
+router.post('/updateTransactionStatus', userAuthentication, userController.updateTransactionStatus);
+
+router.get('/isPremiumUser', userAuthentication, userController.isPremiumUser);
+
+router.get('/getReportsPage', userAuthentication, userController.getReportsPage);
+
+router.get('/getLeaderboardPage', userAuthentication, userController.getLeaderboardPage);
+
+router.get('/getLeaderboardUser', userAuthentication, userController.getLeaderboardUser);
+
+router.post('/dailyReports', userAuthentication, userController.dailyReports);
+
+router.post('/monthlyReports', userAuthentication, userController.monthlyReports);
+
+
+
 module.exports = router;

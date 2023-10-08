@@ -297,68 +297,68 @@ async function editExpense(e) {
     }
 }
 
-// async function buyPremium(e) {
-//     const token = localStorage.getItem("token");
-//     const res = await axios.get(
-//         "http://localhost:3000/purchase/premiumMembership",
-//         { headers: { Authorization: token } }
-//     );
-//     var options = {
-//         key: res.data.key_id, // Enter the Key ID generated from the Dashboard
-//         order_id: res.data.order.id, // For one time payment
-//         // This handler function will handle the success payment
-//         handler: async function (response) {
-//             const res = await axios.post(
-//                 "http://localhost:3000/purchase/updateTransactionStatus",
-//                 {
-//                     order_id: options.order_id,
-//                     payment_id: response.razorpay_payment_id,
-//                 },
-//                 { headers: { Authorization: token } }
-//             );
-
-//             console.log(res);
-//             alert(
-//                 "Welcome to our Premium Membership, You have now access to Reports and LeaderBoard"
-//             );
-//             window.location.reload();
-//             localStorage.setItem("token", res.data.token);
-//         },
-//     };
-//     const rzp1 = new Razorpay(options);
-//     rzp1.open();
-//     e.preventDefault();
-// }
-
-// async function isPremiumUser() {
-//     const token = localStorage.getItem("token");
-//     const res = await axios.get("http://localhost:3000/user/isPremiumUser", {
-//         headers: { Authorization: token },
-//     });
-//     if (res.data.isPremiumUser) {
-//         buyPremiumBtn.innerHTML = "Premium Member &#128081";
-//         reportsLink.removeAttribute("onclick");
-//         leaderboardLink.removeAttribute("onclick");
-//         leaderboardLink.setAttribute("href", "/premium/getLeaderboardPage");
-//         reportsLink.setAttribute("href", "/reports/getReportsPage");
-//         buyPremiumBtn.removeEventListener("click", buyPremium);
-//     } else {
-//     }
-// }
-
 logoutBtn.addEventListener("click", logout);
 
 async function logout() {
     try {
-        //delete the browser cookies
-        document.cookie = "jwt_token=; max-age=-60"; // ? Any diff. way and why we write like this ??
+        // Expire/delete the browser cookies
+        // For delete or expire this cookies we have to write the path here. but for this user dashboard page writing path is optional because the path of page is / and path of cookies is also /. cookies path is taken by the rout or starting rout of the url
+        document.cookie = "jwt_token=; max-age=-60"; // ? Any diff. way to do this and why we write like this ??
         window.location.href = "/";
     } catch (err) {
         console.log(err);
     }
 }
 
-// buyPremiumBtn.addEventListener("click", buyPremium);
+buyPremiumBtn.addEventListener("click", buyPremium);
 
-// document.addEventListener("DOMContentLoaded", isPremiumUser);
+async function buyPremium(e) {
+    // const token = localStorage.getItem("token");
+    const res = await axios.get(
+        "http://localhost:9000/user/premiumMembership"
+        // ,{ headers: { Authorization: token } }
+    );
+
+    var options = {
+        key: res.data.key_id, // Enter the Key ID generated from the Dashboard
+        order_id: res.data.order.id, // For one time payment
+        // This handler function will handle the success payment
+        handler: async function (response) {
+            const res = await axios.post(
+                "http://localhost:9000/user/updateTransactionStatus",
+                {
+                    order_id: options.order_id,
+                    payment_id: response.razorpay_payment_id,
+                }
+                // ,{ headers: { Authorization: token } }
+            );
+
+            alert(
+                "Welcome to our Premium Membership, You have now access to Reports and LeaderBoard"
+            );
+            window.location.reload();
+            // localStorage.setItem("token", res.data.token);
+        },
+    };
+    const rzp1 = new Razorpay(options);
+    rzp1.open();
+    // e.preventDefault();
+}
+
+document.addEventListener("DOMContentLoaded", isPremiumUser);
+
+async function isPremiumUser() {
+    // const token = localStorage.getItem("token");
+    const res = await axios.get("http://localhost:9000/user/isPremiumUser", {
+        //   headers: { Authorization: token },
+    });
+    if (res.data.isPremiumUser) {
+        buyPremiumBtn.innerHTML = "Premium Member &#128081";
+        buyPremiumBtn.removeEventListener("click", buyPremium);
+        leaderboardLink.removeAttribute("onclick");
+        reportsLink.removeAttribute("onclick");
+        leaderboardLink.setAttribute("href", "/user/getLeaderboardPage");
+        reportsLink.setAttribute("href", "/user/getReportsPage");
+    }
+}
 

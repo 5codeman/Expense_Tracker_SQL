@@ -18,6 +18,7 @@ app.use(cookieParser());
 const sequelize = require('./util/database');
 const User = require('./models/user');  // ? What is use of this
 const Expense = require('./models/expense'); // ? What is use of this
+const Premium = require('./models/premium');
 
 // set the static folder in my express (by the we can use css and js file)
 app.use(express.static('./public'));
@@ -30,6 +31,9 @@ app.use('/expense', require('./router/expense'));
 //By this a foreign key is added in expense table which is a primary key of user table
 User.hasMany(Expense);
 Expense.belongsTo(User);
+
+User.hasMany(Premium);
+Premium.belongsTo(User);
 
 //{ force: true } - it is writen in sync(), when we want to crate the fresh tabel or update the table or table schema
 sequelize.sync().then((result) => { // ? How this .sync find the all module for creating table
