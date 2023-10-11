@@ -21,6 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.1",
     "razorpay": "^2.9.2",
-    "sequelize": "^6.33.0"
+    "sequelize": "^6.33.0",
+    "sib-api-v3-sdk": "^8.5.0",
+    "uuid": "^9.0.1"
   }
 }

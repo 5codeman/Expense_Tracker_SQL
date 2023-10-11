@@ -33,6 +33,12 @@ router.post('/dailyReports', userAuthentication, userController.dailyReports);
 
 router.post('/monthlyReports', userAuthentication, userController.monthlyReports);
 
+router.get("/forgotPasswordPage", userController.forgotPasswordPage);
 
+router.post("/sendMail", userController.sendMail);
+
+router.get("/resetPasswordPage/:requestId", userController.resetPasswordPage);
+
+router.post("/resetPassword", userController.resetPassword);
 
 module.exports = router;
