@@ -35,10 +35,31 @@ module.exports.addExpense = async (req, res) => {
     }
 };
 
+//its a normal controller for sending the data to frontend
 exports.getAllExpenses = async (req, res) => {
     try {
         const expenses = await Expense.findAll({ where: { userId: req.user.id } });
         res.json(expenses); // send the date where api call (This is is API or controller for get expense data)
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+//this controller work with pagenation
+exports.getAllExpensesforPagination = async (req, res) => {
+    try {
+        const pageNo = req.params.page;
+        const limit = 7; //how many to take
+        const offset = (pageNo - 1) * limit; //how many records to skip from starting
+        const totalExpenses = await Expense.count({ where: { userId: req.user.id } });
+        const totalPages = Math.ceil(totalExpenses / limit);
+
+        const expenses = await Expense.findAll({
+            where: { userId: req.user.id },
+            offset: offset, //how many records to skip from starting
+            limit: limit //how many to take
+        });
+        res.json({ expenses: expenses, totalPages: totalPages });
     } catch (err) {
         console.log(err);
     }

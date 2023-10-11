@@ -34,39 +34,40 @@ async function addExpense() {
             window.location.href = '/user_dashboard';
         }
 
-        const currentDate = new Date();
-        const day = currentDate.getDate(); // date
-        const month = currentDate.getMonth() + 1;
-        const year = currentDate.getFullYear();
+        else {
+            const currentDate = new Date();
+            const day = currentDate.getDate(); // date
+            const month = currentDate.getMonth() + 1;
+            const year = currentDate.getFullYear();
 
 
-        // add leading zeros to day and month if needed
-        const formattedDay = day < 10 ? `0${day}` : day;
-        const formattedMonth = month < 10 ? `0${month}` : month;
+            // add leading zeros to day and month if needed
+            const formattedDay = day < 10 ? `0${day}` : day;
+            const formattedMonth = month < 10 ? `0${month}` : month;
 
-        // create the date string in date-month-year format
-        const dateStr = `${formattedDay}-${formattedMonth}-${year}`;
+            // create the date string in date-month-year format
+            const dateStr = `${formattedDay}-${formattedMonth}-${year}`;
 
-        // console.log(dateStr); // outputs something like "23-02-2023"
+            // console.log(dateStr); // outputs something like "23-02-2023"
 
-        // const token = localStorage.getItem("token");
+            // const token = localStorage.getItem("token");
 
-        //here we paas json object and this is api call from frontend to backend
-        await axios.post('http://localhost:9000/expense/addExpense', {
-            date: dateStr,
-            category: categoryValue,
-            description: descriptionValue,
-            amount: amountValue
-        }
-            // ,{ headers: { Authorization: token } }
-        ).then((res) => {
-            if (res.status == 200) {
-                window.location.reload(); // Pending -: doubt why use this, try to do diff.way..
+            //here we paas json object and this is api call from frontend to backend
+            await axios.post('http://localhost:9000/expense/addExpense', {
+                date: dateStr,
+                category: categoryValue,
+                description: descriptionValue,
+                amount: amountValue
             }
-        }).catch((err) => {
-            console.log(err);
-        });
-
+                // ,{ headers: { Authorization: token } }
+            ).then((res) => {
+                if (res.status == 200) {
+                    window.location.reload(); // Pending -: doubt why use this, try to do diff.way..
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     } catch {
         (err) => console.log(err);
     }
@@ -78,13 +79,9 @@ document.addEventListener("DOMContentLoaded", getAllExpenses);
 async function getAllExpenses() {
     // e.preventDefault();
     try {
-        // const token = localStorage.getItem("token");
-        const res = await axios.get(
-            "http://localhost:9000/expense/getAllExpenses" // /1 ,
-            // { headers: { Authorization: token } }
-        );
+        const res = await axios.get("http://localhost:9000/expense/getAllExpenses/1");
 
-        res.data.forEach((expenses) => { //.expenses
+        res.data.expenses.forEach((expenses) => {
             const id = expenses.id;
             const date = expenses.date;
             const categoryValue = expenses.category;
@@ -134,92 +131,96 @@ async function getAllExpenses() {
             tr.appendChild(td4);
         });
 
-        // ---------------------------------------------------------------------//
+        // make the pagenation buttons
+        const ul = document.getElementById("paginationUL");
+        let Total_Pages = res.data.totalPages;
 
-        // const ul = document.getElementById("paginationUL");
-        // for (let i = 1; i <= res.data.totalPages; i++) {
-        //     const li = document.createElement("li");
-        //     const a = document.createElement("a");
-        //     li.setAttribute("class", "page-item");
-        //     a.setAttribute("class", "page-link");
-        //     a.setAttribute("href", "#");
-        //     a.appendChild(document.createTextNode(i));
-        //     li.appendChild(a);
-        //     ul.appendChild(li);
-        //     a.addEventListener("click", paginationBtn);
-        // }
+        for (let i = 1; i <= Total_Pages; i++) {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+
+            li.setAttribute("class", "page-item");
+            a.setAttribute("class", "page-link");
+            a.setAttribute("href", "#");
+
+            a.appendChild(document.createTextNode(i));
+            li.appendChild(a);
+            ul.appendChild(li);
+        }
+
+        // Add event listener to all anchor tag which is page button. and inside the list item under ul
+        const anchorTag = document.getElementsByClassName("page-link");
+        for (let i = 0; i < Total_Pages; i++) {
+            anchorTag[i].addEventListener("click", paginationBtn);
+        }
     } catch {
         (err) => console.log(err);
     }
 }
 
-// async function paginationBtn(e) {
-//     try {
-//         const pageNo = e.target.textContent;
-//         const token = localStorage.getItem("token");
-//         const res = await axios.get(
-//             `http://localhost:3000/expense/getAllExpenses/${pageNo}`,
-//             { headers: { Authorization: token } }
-//         );
+async function paginationBtn(e) {
+    try {
+        const pageNo = e.target.textContent;
+        const res = await axios.get(`http://localhost:9000/expense/getAllExpenses/${pageNo}`);
 
-//         table.innerHTML = "";
+        table.innerHTML = ""; // clear the previous table data 
 
-//         res.data.expenses.forEach((expenses) => {
-//             const id = expenses.id;
-//             const date = expenses.date;
-//             const categoryValue = expenses.category;
-//             const descriptionValue = expenses.description;
-//             const amountValue = expenses.amount;
+        res.data.expenses.forEach((expenses) => {
+            const id = expenses.id;
+            const date = expenses.date;
+            const categoryValue = expenses.category;
+            const descriptionValue = expenses.description;
+            const amountValue = expenses.amount;
 
-//             let tr = document.createElement("tr");
-//             tr.className = "trStyle";
+            let tr = document.createElement("tr");
+            tr.className = "trStyle";
 
-//             table.appendChild(tr);
+            table.appendChild(tr);
 
-//             let idValue = document.createElement("th");
-//             idValue.setAttribute("scope", "row");
-//             idValue.setAttribute("style", "display: none");
+            let idValue = document.createElement("th");
+            idValue.setAttribute("scope", "row");
+            idValue.setAttribute("style", "display: none");
 
-//             let th = document.createElement("th");
-//             th.setAttribute("scope", "row");
+            let th = document.createElement("th");
+            th.setAttribute("scope", "row");
 
-//             tr.appendChild(idValue);
-//             tr.appendChild(th);
+            tr.appendChild(idValue);
+            tr.appendChild(th);
 
-//             idValue.appendChild(document.createTextNode(id));
-//             th.appendChild(document.createTextNode(date));
+            idValue.appendChild(document.createTextNode(id));
+            th.appendChild(document.createTextNode(date));
 
-//             let td1 = document.createElement("td");
-//             td1.appendChild(document.createTextNode(categoryValue));
+            let td1 = document.createElement("td");
+            td1.appendChild(document.createTextNode(categoryValue));
 
-//             let td2 = document.createElement("td");
-//             td2.appendChild(document.createTextNode(descriptionValue));
+            let td2 = document.createElement("td");
+            td2.appendChild(document.createTextNode(descriptionValue));
 
-//             let td3 = document.createElement("td");
-//             td3.appendChild(document.createTextNode(amountValue));
+            let td3 = document.createElement("td");
+            td3.appendChild(document.createTextNode(amountValue));
 
-//             let td4 = document.createElement("td");
+            let td4 = document.createElement("td");
 
-//             let deleteBtn = document.createElement("button");
-//             deleteBtn.className = "editDelete btn btn-danger delete";
-//             deleteBtn.appendChild(document.createTextNode("Delete"));
+            let deleteBtn = document.createElement("button");
+            deleteBtn.className = "editDelete btn btn-danger delete";
+            deleteBtn.appendChild(document.createTextNode("Delete"));
 
-//             let editBtn = document.createElement("button");
-//             editBtn.className = "editDelete btn btn-success edit";
-//             editBtn.appendChild(document.createTextNode("Edit"));
+            let editBtn = document.createElement("button");
+            editBtn.className = "editDelete btn btn-success edit";
+            editBtn.appendChild(document.createTextNode("Edit"));
 
-//             td4.appendChild(deleteBtn);
-//             td4.appendChild(editBtn);
+            td4.appendChild(deleteBtn);
+            td4.appendChild(editBtn);
 
-//             tr.appendChild(td1);
-//             tr.appendChild(td2);
-//             tr.appendChild(td3);
-//             tr.appendChild(td4);
-//         });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 table.addEventListener("click", (e) => {
     deleteExpense(e);

@@ -8,7 +8,11 @@ const expenseController = require('../controllers/expense_controller');
 
 router.post('/addExpense', userAuthentication, expenseController.addExpense);
 
+//its a normal route for get the data
 router.get('/getAllExpenses', userAuthentication, expenseController.getAllExpenses);
+
+//this route work with pagenation
+router.get('/getAllExpenses/:page', userAuthentication, expenseController.getAllExpensesforPagination);
 
 router.get('/deleteExpense/:id', userAuthentication, expenseController.deleteExpense);
 
