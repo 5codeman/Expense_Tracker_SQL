@@ -137,6 +137,7 @@ async function getAllExpenses() {
 
         for (let i = 1; i <= Total_Pages; i++) {
             const li = document.createElement("li");
+            //Here I make anchor tag, but this is not the best way beacuse anchor tag reload our page. so we have to make a button instead of anchor tag
             const a = document.createElement("a");
 
             li.setAttribute("class", "page-item");

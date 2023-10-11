@@ -87,3 +87,18 @@ html,body {
   background-color: #d2eaf7;
   color: #233b64;
 }
+
+/* For Responsive
+
+@media only screen and (max-width: 1500px){
+  #form1 {
+    width: 98%;
+    margin: 1%;
+  }
+}
+
+@media only screen and (max-width: 976px){
+  #table {
+    width: 950px;
+  }
+} */
