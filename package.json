@@ -4,7 +4,8 @@
   "description": "Fullstack Web Application for Expense Tracker",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

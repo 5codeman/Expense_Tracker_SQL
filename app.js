@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const express = require('express');
-const port = 9000;
+const PORT = process.env.PORT || 9000;
 const app = express();
 
 //parse the form data sent with post request
@@ -41,11 +41,11 @@ ResetPassword.belongsTo(User);
 
 //{ force: true } - it is writen in sync(), when we want to crate the fresh tabel or update the table or table schema
 sequelize.sync().then((result) => { // ? How this .sync find the all module for creating table
-    app.listen(port, function (err) {
+    app.listen(PORT, function (err) {
         if (err) {
             console.log(`Error in running the server: ${err}`);
         }
-        console.log(`Server is running on port: ${port}`);
+        console.log(`Server is running on port: ${PORT}`);
     });
 }).catch((err) => {
     console.log(err);
