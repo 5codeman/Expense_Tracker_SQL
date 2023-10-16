@@ -53,7 +53,7 @@ async function addExpense() {
             // const token = localStorage.getItem("token");
 
             //here we paas json object and this is api call from frontend to backend
-            await axios.post('http://localhost:9000/expense/addExpense', {
+            await axios.post('http://43.204.140.151:9000/expense/addExpense', {
                 date: dateStr,
                 category: categoryValue,
                 description: descriptionValue,
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", getAllExpenses);
 async function getAllExpenses() {
     // e.preventDefault();
     try {
-        const res = await axios.get("http://localhost:9000/expense/getAllExpenses/1");
+        const res = await axios.get("http://43.204.140.151:9000/expense/getAllExpenses/1");
 
         res.data.expenses.forEach((expenses) => {
             const id = expenses.id;
@@ -162,7 +162,7 @@ async function getAllExpenses() {
 async function paginationBtn(e) {
     try {
         const pageNo = e.target.textContent;
-        const res = await axios.get(`http://localhost:9000/expense/getAllExpenses/${pageNo}`);
+        const res = await axios.get(`http://43.204.140.151:9000/expense/getAllExpenses/${pageNo}`);
 
         table.innerHTML = ""; // clear the previous table data 
 
@@ -234,7 +234,7 @@ async function deleteExpense(e) {
             let tr = e.target.parentElement.parentElement; //table row
             let id = tr.children[0].textContent;
             const res = await axios.get(
-                `http://localhost:9000/expense/deleteExpense/${id}`
+                `http://43.204.140.151:9000/expense/deleteExpense/${id}`
                 // ,{ headers: { Authorization: token } }
             ).then(() => {
                 window.location.reload();
@@ -264,7 +264,7 @@ async function editExpense(e) {
             let id = tr.children[0].textContent;
             //Fill the input values with the existing values
             const res = await axios.get(
-                "http://localhost:9000/expense/getAllExpenses" // here not need of api call we can acess all the data from tr.children[1] tr.children[2].... so on
+                "http://43.204.140.151:9000/expense/getAllExpenses" // here not need of api call we can acess all the data from tr.children[1] tr.children[2].... so on
                 // ,{ headers: { Authorization: token } }
             );
             res.data.forEach((expense) => {
@@ -281,7 +281,7 @@ async function editExpense(e) {
                         e.preventDefault();
                         // console.log("request to backend for edit");
                         const res = await axios.post(
-                            `http://localhost:9000/expense/updateExpense/${id}`,
+                            `http://43.204.140.151:9000/expense/updateExpense/${id}`,
                             {
                                 category: categoryValue.textContent.trim(),
                                 description: descriptionValue.value,
@@ -317,7 +317,7 @@ buyPremiumBtn.addEventListener("click", buyPremium);
 async function buyPremium(e) {
     // const token = localStorage.getItem("token");
     const res = await axios.get(
-        "http://localhost:9000/user/premiumMembership"
+        "http://43.204.140.151:9000/user/premiumMembership"
         // ,{ headers: { Authorization: token } }
     );
 
@@ -327,7 +327,7 @@ async function buyPremium(e) {
         // This handler function will handle the success payment
         handler: async function (response) {
             const res = await axios.post(
-                "http://localhost:9000/user/updateTransactionStatus",
+                "http://43.204.140.151:9000/user/updateTransactionStatus",
                 {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id,
@@ -351,7 +351,7 @@ document.addEventListener("DOMContentLoaded", isPremiumUser);
 
 async function isPremiumUser() {
     // const token = localStorage.getItem("token");
-    const res = await axios.get("http://localhost:9000/user/isPremiumUser", {
+    const res = await axios.get("http://43.204.140.151:9000/user/isPremiumUser", {
         //   headers: { Authorization: token },
     });
     if (res.data.isPremiumUser) {

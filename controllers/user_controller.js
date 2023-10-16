@@ -274,7 +274,7 @@ module.exports.sendMail = async (req, res) => {
             subject: "Expense Tracker Reset Password",
             // textContent: "Link Below", (no need of text content because html content overide on textcontent)
             htmlContent: `<h3> Hii! We got the request from you for reset the password. Here is the link below >>> </h3>
-        <a href="http://localhost:9000/resetPasswordPage/{{params.requestId}}"> Reset your Password from here </a>`,
+        <a href="http://43.204.140.151:9000/resetPasswordPage/{{params.requestId}}"> Reset your Password from here </a>`,
             params: {
                 requestId: requestId,
             },

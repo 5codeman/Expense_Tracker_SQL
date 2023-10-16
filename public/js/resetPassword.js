@@ -6,7 +6,7 @@ async function updatePassword() {
     try {
         const newPassword = document.getElementById("newPassword").value;
         const res = await axios.post(
-            "http://localhost:9000/resetPassword", { password: newPassword }
+            "http://43.204.140.151:9000/resetPassword", { password: newPassword }
         );
         alert(res.data.message);
         window.location.href = "/";

@@ -4,7 +4,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 document.addEventListener("DOMContentLoaded", getLeaderboard);
 
 async function getLeaderboard() {
-    const res = await axios.get("http://localhost:9000/user/getLeaderboardUser");
+    const res = await axios.get("http://43.204.140.151:9000/user/getLeaderboardUser");
     res.data.sort((a, b) => {
         return b.totalExpenses - a.totalExpenses; //sort in desending order
     })

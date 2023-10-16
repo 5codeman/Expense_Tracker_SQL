@@ -20,7 +20,7 @@ async function getDailyReport(e) {
             date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear()}`;
 
         let totalAmount = 0;
-        const res = await axios.post("http://localhost:9000/user/dailyReports", { date: formattedDate }
+        const res = await axios.post("http://43.204.140.151:9000/user/dailyReports", { date: formattedDate }
         );
 
         // for empty the previous data
@@ -85,7 +85,7 @@ async function getMonthlyReport(e) {
         const formattedMonth = `${(month.getMonth() + 1).toString().padStart(2, "0")}`;
 
         let totalAmount = 0;
-        const res = await axios.post("http://localhost:9000/user/monthlyReports", { month: formattedMonth }
+        const res = await axios.post("http://43.204.140.151:9000/user/monthlyReports", { month: formattedMonth }
             // ,{ headers: { Authorization: token } }
         );
 
