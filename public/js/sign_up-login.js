@@ -1,5 +1,6 @@
 const signUp = document.getElementById("signUp");
 const signIn = document.getElementById("signIn");
+const loginAsGuest = document.getElementById("loginBtn2");
 // const container = document.getElementById("container");
 // const signUpBtn = document.getElementById("signUpBtn");
 // const loginBtn = document.getElementById("loginBtn");
@@ -13,6 +14,25 @@ signUp.addEventListener("click", () => {
 signIn.addEventListener("click", () => {
     container.classList.remove("right-panel-active");
 });
+
+loginAsGuest.addEventListener("click", login);
+
+function login() {
+    const loginDetails = {
+        email: "guest@gmail.com",
+        password: "guest123",
+    };
+
+    // axios.post("http://localhost:9000/signIn", loginDetails);
+
+    axios.post('http://localhost:9000/signIn', loginDetails).then(response => {
+        if (response.data.redirect) {
+            window.location.href = response.data.redirect;
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
 
 // function login() {
 //     const loginDetails = {

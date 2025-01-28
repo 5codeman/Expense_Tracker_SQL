@@ -57,7 +57,9 @@ module.exports.signIn = async function (req, res) {
             else if (user && user.password == password) {
                 const token = generateAccessToken(user.id, user.email);
                 res.cookie("jwt_token", token); // , { maxAge: 1000, httpOnly: true } = for set the cookie expire time
-                res.status(200).send(`<script> window.location.href='/user_dashboard'; </script>`);
+                // res.status(200).send(`<script> window.location.href='/user_dashboard'; </script>`);
+                // res.redirect('/user_dashboard');
+                res.status(200).json({ redirect: '/user_dashboard' });
 
             }
         }).catch((err) => {
@@ -272,9 +274,11 @@ module.exports.sendMail = async (req, res) => {
             sender,
             To: receivers,
             subject: "Expense Tracker Reset Password",
+
             // textContent: "Link Below", (no need of text content because html content overide on textcontent)
+
             htmlContent: `<h3> Hii! We got the request from you for reset the password. Here is the link below >>> </h3>
-        <a href="http://localhost:9000/resetPasswordPage/{{params.requestId}}"> Reset your Password from here </a>`,
+            <a href="http://localhost:9000/resetPasswordPage/{{params.requestId}}"> Reset your Password from here </a>`,
             params: {
                 requestId: requestId,
             },
